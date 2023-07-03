@@ -1,0 +1,20 @@
+<launch>
+    <param name="robot_description" command="$(find xacro)/xacro $(find robot_mod)/urdf/xacro/my_car_total_first.xacro" />
+
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find robot_mod)/config/rviz/rviz_config_first.rviz" />
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" output="screen" />
+    <!-- <node pkg="joint_state_publisher" type="my_car_total_first" name="joint_state_publisher" output="screen" /> -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" />
+    <!-- <node pkg="robot_state_publisher" type="my_car_total_first" name="robot_state_publisher" output="screen" /> -->
+
+    <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui" output="screen" />
+
+    <!-- 调用了 arbotix_python 功能包下的 arbotix_driver 节点 -->
+    <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
+        <rosparam file="$(find robot_mod)/config/arbotix/my_arbotix_first.yaml" command="load" />
+        <param name="sim" value="true" />
+    </node>
+
+</launch>
+
+<!-- rostopic pub -r 10 /cmd_vel geometry_msgs/Twist '{linear: {x: 0.2, y: 0, z: 0}, angular: {x: 0, y: 0, z: 0.5}}' -->

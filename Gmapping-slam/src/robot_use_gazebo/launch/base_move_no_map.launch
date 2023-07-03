@@ -1,0 +1,9 @@
+<launch>
+    <!-- 启动SLAM节点 -->
+    <include file="$(find robot_use_gazebo)/launch/start_1.launch" />
+    <!-- 运行move_base节点 -->
+    <include file="$(find robot_use_gazebo)/launch/path.launch" />
+    <!-- 运行rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find robot_use_gazebo)/config/rviz/navigation.rviz"/>
+</launch>
+

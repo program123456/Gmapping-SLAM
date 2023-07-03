@@ -1,0 +1,23 @@
+<launch>
+
+    <!-- 设置参数 -->
+    <param name="robot_description" textfile="$(find robot_mod)/urdf/urdf/my_car_first.urdf" />
+
+    <!-- 启动 rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find robot_mod)/config/rviz/rviz_config_first.rviz" />
+
+     <!-- 启动机器人状态和关节状态发布节点 -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" />
+
+    <!-- 启动图形化的控制关节运动节点 -->
+    <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui" />
+
+    <!-- 调用了 arbotix_python 功能包下的 arbotix_driver 节点 -->
+    <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
+        <rosparam file="$(find my_urdf05_rviz)/config/hello.yaml" command="load" />
+        <param name="sim" value="true" />
+    </node>
+
+
+</launch>
